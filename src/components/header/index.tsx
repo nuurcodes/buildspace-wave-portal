@@ -35,9 +35,8 @@ const Header = () => {
               variant='h5'
               sx={{ textDecoration: 'none', color: 'text.primary' }}
             >
-              DApp Starter
+              WavePortal
             </Link>
-            <Link href='/transfer'>Transfer</Link>
           </Stack>
           <Stack direction='row' spacing={2}>
             <NetworkBadge />

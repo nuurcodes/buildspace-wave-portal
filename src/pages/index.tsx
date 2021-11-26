@@ -2,29 +2,11 @@ import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import MainLayout from '@src/components/layout/main'
-import NetworkInfo from '@components/landing/NetworkInfo'
-import TransactionInfo from '@components/landing/TransactionInfo'
+import WavePortal from '@components/landing/WavePortal'
 import { useEthers } from '@usedapp/core'
-import { Box } from '@mui/material'
-import ConnectWalletButton from '@src/components/shared/ConnectWalletButton'
-
-const ConnectAccount = () => {
-  return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <ConnectWalletButton size='large' />
-    </Box>
-  )
-}
 
 const Home: NextPage = () => {
-  const { account } = useEthers()
+  const { connector } = useEthers()
   return (
     <>
       <Head>
@@ -33,11 +15,8 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <MainLayout>
-        <>
-          {account && <NetworkInfo />}
-          {account && <TransactionInfo />}
-          {!account && <ConnectAccount />}
-        </>
+        {!connector && null}
+        {connector && <WavePortal />}
       </MainLayout>
     </>
   )
