@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import { Button, CircularProgress, Typography } from '@mui/material'
 import { Contract } from '@config/contracts'
 import { useContract } from '@hooks/useContract'
-import { useContractFunction } from '@usedapp/core'
+import { useContractFunction, useEthers } from '@usedapp/core'
 import { ethers } from 'ethers'
 
 enum Transaction {
@@ -11,6 +11,7 @@ enum Transaction {
 }
 
 export default function WavePortal() {
+  const { chainId } = useEthers()
   const [totalWaves, setTotalWaves] = React.useState(0)
   const contract = useContract(Contract.WAVE_PORTAL_CONTRACT)
 
@@ -21,10 +22,13 @@ export default function WavePortal() {
   )
 
   React.useEffect(() => {
-    contract.getTotalWaves().then((waves) => {
-      setTotalWaves(waves.toNumber())
-    })
-  }, [contract])
+    contract
+      .getTotalWaves()
+      .then((waves) => {
+        setTotalWaves(waves.toNumber())
+      })
+      .catch((e) => setTotalWaves(0))
+  }, [contract, chainId])
 
   return (
     <Box
