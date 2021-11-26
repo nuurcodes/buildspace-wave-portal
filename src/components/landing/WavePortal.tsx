@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Box } from '@mui/system'
-import { Button, CircularProgress } from '@mui/material'
+import { Button, CircularProgress, Typography } from '@mui/material'
 import { Contract } from '@config/contracts'
 import { useContract } from '@hooks/useContract'
 import { useContractFunction } from '@usedapp/core'
@@ -27,9 +27,18 @@ export default function WavePortal() {
   }, [contract])
 
   return (
-    <Box>
-      <Box>Total waves: {totalWaves}</Box>
+    <Box
+      sx={{
+        display: 'flex',
+        flexGrow: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      <Typography variant='h3'>Total waves: {totalWaves}</Typography>
       <Button
+        size='large'
         onClick={() => send('Hello')}
         disabled={state.status === 'Mining'}
         endIcon={
