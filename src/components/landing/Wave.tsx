@@ -37,7 +37,10 @@ const Wave: React.FC<Props> = ({ wave }) => {
         primary={wave.message}
         secondary={formatDistance(
           new Date(Number(wave.timestamp) * 1000),
-          new Date()
+          new Date(),
+          {
+            addSuffix: true,
+          }
         )}
         sx={{ wordWrap: 'break-word' }}
       />
