@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import MainLayout from '@src/components/layout/main'
 import WavePortal from '@components/landing/WavePortal'
+import ConnectWallet from '@components/landing/ConnectWallet'
 import { useEthers } from '@usedapp/core'
 
 const Home: NextPage = () => {
@@ -17,7 +18,7 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <MainLayout>
-        {!connector && null}
+        {!connector && <ConnectWallet />}
         {connector && <WavePortal />}
       </MainLayout>
     </>
