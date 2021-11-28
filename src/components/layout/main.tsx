@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Box } from '@mui/system'
+import { Container } from '@mui/material'
 import Header from '@components/header'
 import Footer from '@components/footer'
-import { Container } from '@mui/material'
 
 const MainLayout: FC = ({ children }) => {
   return (

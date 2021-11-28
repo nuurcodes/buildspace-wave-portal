@@ -34,7 +34,7 @@ const ConnectWalletModal = NiceModal.create(() => {
         }}
       >
         <Typography textAlign='center'>
-          {`Don't have a wallet?`}
+          {`Don't have a wallet? `}
           <Link
             color='inherit'
             target='blank'

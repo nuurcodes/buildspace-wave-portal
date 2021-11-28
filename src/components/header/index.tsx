@@ -1,4 +1,3 @@
-import React from 'react'
 import ThemeToggle from '@components/header/ThemeToggle'
 import NetworkBadge from '@components/shared/NetworkBadge'
 import WalletBadge from '@components/header/WalletBadge'
@@ -35,9 +34,8 @@ const Header = () => {
               variant='h5'
               sx={{ textDecoration: 'none', color: 'text.primary' }}
             >
-              DApp Starter
+              WavePortal
             </Link>
-            <Link href='/transfer'>Transfer</Link>
           </Stack>
           <Stack direction='row' spacing={2}>
             <NetworkBadge />

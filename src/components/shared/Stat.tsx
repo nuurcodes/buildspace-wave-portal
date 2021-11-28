@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Fade, Paper, PaperProps, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
