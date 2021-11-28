@@ -4,6 +4,7 @@ import { Paper } from '@mui/material'
 import { Contract } from '@config/contracts'
 import { useContract } from '@hooks/useContract'
 import { useEthers } from '@usedapp/core'
+import { BigNumber } from 'ethers'
 import Waves from '@components/landing/Waves'
 import WavePortalFooter from '@components/landing/WavePortalFooter'
 import WavePortalHeader from '@components/landing/WavePortalHeader'
@@ -12,7 +13,6 @@ export type WaveType = {
   sender: string
   message: string
   timestamp: string
-  name: string
 }
 
 export default function WavePortal() {
@@ -21,18 +21,17 @@ export default function WavePortal() {
   const contract = useContract(Contract.WAVE_PORTAL_CONTRACT)
 
   const onNewWave = useCallback(
-    (from: string, message: string, timestamp: number) => {
+    (from: string, message: string, timestamp: BigNumber) => {
       setWaves((prevState) => [
         ...prevState,
         {
           sender: from,
           message: message,
           timestamp: timestamp.toString(),
-          name: account === from ? 'You' : from,
         },
       ])
     },
-    [account]
+    []
   )
 
   useEffect(() => {
@@ -51,7 +50,6 @@ export default function WavePortal() {
             sender: wave.sender,
             message: wave.message,
             timestamp: wave.timestamp.toString(),
-            name: account === wave.sender ? 'You' : wave.sender,
           }))
         )
       })
