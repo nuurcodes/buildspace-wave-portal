@@ -7,6 +7,20 @@ import Footer from '@components/footer'
 const MainLayout: FC = ({ children }) => {
   return (
     <Box minHeight='100vh' display='flex' flexDirection='column'>
+      <Box
+        sx={{
+          width: '200vw',
+          height: '200vh',
+          transform: 'translate(-50vw, -100vh)',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: -1,
+          position: 'fixed',
+          background:
+            'radial-gradient(50% 50% at 50% 50%,#368BE810 0,rgba(255,255,255,0) 100%)',
+        }}
+      />
       <Box role='header'>
         <Header />
       </Box>
