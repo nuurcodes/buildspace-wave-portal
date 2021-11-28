@@ -1,4 +1,4 @@
-import { Container, Typography } from '@mui/material'
+import { Container, Link, Typography } from '@mui/material'
 import { Box, useTheme } from '@mui/system'
 
 const Footer = () => {
@@ -24,7 +24,14 @@ const Footer = () => {
           }}
         >
           <Typography color='text.secondary'>Made with ❤️</Typography>
-          <Typography color='text.secondary'>NinjaNuur</Typography>
+          <Link
+            color='text.secondary'
+            target='_blank'
+            href='https://twitter.com/NinjaNuur_'
+            rel='noreferrer noopener'
+          >
+            NinjaNuur
+          </Link>
         </Box>
       </Container>
     </Box>
