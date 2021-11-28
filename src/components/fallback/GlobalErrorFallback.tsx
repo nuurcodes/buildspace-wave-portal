@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { __DEV__ } from '@constants/index'
 import {
   Dialog,

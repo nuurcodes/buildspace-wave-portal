@@ -1,51 +1,48 @@
-import * as React from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Box } from '@mui/system'
-import {
-  Paper,
-  Button,
-  CircularProgress,
-  TextField,
-  Typography,
-  Stack,
-} from '@mui/material'
+import { Paper } from '@mui/material'
 import { Contract } from '@config/contracts'
 import { useContract } from '@hooks/useContract'
-import { useContractFunction, useEthers } from '@usedapp/core'
-import { ethers } from 'ethers'
+import { useEthers } from '@usedapp/core'
+import Waves from '@components/landing/Waves'
+import WavePortalFooter from '@components/landing/WavePortalFooter'
+import WavePortalHeader from '@components/landing/WavePortalHeader'
 
-enum Transaction {
-  WAVE = 'Send wave',
-}
-
-type Wave = {
+export type WaveType = {
   sender: string
   message: string
   timestamp: string
+  name: string
 }
 
 export default function WavePortal() {
-  const { chainId } = useEthers()
-  const [message, setMessage] = React.useState('')
-  const [totalWaves, setTotalWaves] = React.useState(0)
-  const [waves, setWaves] = React.useState<Wave[]>([])
+  const { chainId, account } = useEthers()
+  const [waves, setWaves] = useState<WaveType[]>([])
   const contract = useContract(Contract.WAVE_PORTAL_CONTRACT)
 
-  const { state, send } = useContractFunction(
-    contract as ethers.Contract,
-    'wave',
-    { transactionName: Transaction.WAVE }
+  const onNewWave = useCallback(
+    (from: string, message: string, timestamp: number) => {
+      setWaves((prevState) => [
+        ...prevState,
+        {
+          sender: from,
+          message: message,
+          timestamp: timestamp.toString(),
+          name: account === from ? 'You' : from,
+        },
+      ])
+    },
+    [account]
   )
 
-  React.useEffect(() => {
-    contract
-      .getTotalWaves()
-      .then((total) => {
-        setTotalWaves(total.toNumber())
-      })
-      .catch((e) => setTotalWaves(0))
-  }, [contract, chainId])
+  useEffect(() => {
+    contract.on('NewWave', onNewWave)
+    return () => {
+      contract.off('NewWave', onNewWave)
+    }
+  }, [contract, onNewWave])
 
-  React.useEffect(() => {
+  useEffect(() => {
     contract
       .getAllWaves()
       .then((waves) => {
@@ -54,20 +51,12 @@ export default function WavePortal() {
             sender: wave.sender,
             message: wave.message,
             timestamp: wave.timestamp.toString(),
+            name: account === wave.sender ? 'You' : wave.sender,
           }))
         )
       })
       .catch((e) => setWaves([]))
-  }, [contract, chainId])
-
-  const onSendMessage = async () => {
-    try {
-      await send(message)
-      setMessage('')
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  }, [contract, chainId, account])
 
   return (
     <Box
@@ -81,43 +70,13 @@ export default function WavePortal() {
     >
       <Paper
         sx={{
-          padding: 4,
+          width: '100%',
+          maxWidth: '480px',
         }}
       >
-        <Typography variant='h4'>Total waves: {totalWaves}</Typography>
-        <Box>
-          {waves.map((wave) => (
-            <>
-              <div>{wave.sender}</div>
-              <div>{wave.message}</div>
-              <div>{wave.timestamp}</div>
-            </>
-          ))}
-        </Box>
-        <Stack direction='column' spacing={2}>
-          <TextField
-            fullWidth
-            id='outlined-multiline-flexible'
-            label='Message'
-            multiline
-            maxRows={4}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <Button
-            fullWidth
-            size='large'
-            onClick={onSendMessage}
-            disabled={state.status === 'Mining' || !message}
-            endIcon={
-              state.status === 'Mining' ? (
-                <CircularProgress size='16px' color='inherit' />
-              ) : undefined
-            }
-          >
-            Wave
-          </Button>
-        </Stack>
+        <WavePortalHeader waves={waves} />
+        <Waves waves={waves} />
+        <WavePortalFooter />
       </Paper>
     </Box>
   )

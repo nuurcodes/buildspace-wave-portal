@@ -1,4 +1,3 @@
-import React from 'react'
 import ThemeToggle from '@components/header/ThemeToggle'
 import NetworkBadge from '@components/shared/NetworkBadge'
 import WalletBadge from '@components/header/WalletBadge'

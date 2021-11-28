@@ -39,6 +39,8 @@
     "@web3-react/portis-connector": "^6.1.9",
     "@web3-react/walletconnect-connector": "^6.2.8",
     "@web3-react/walletlink-connector": "^6.2.8",
+    "date-fns": "^2.26.0",
+    "ethereum-blockies-base64": "^1.0.2",
     "ethers": "^5.5.1",
     "next": "11.1.2",
     "notistack": "^3.0.0-alpha.2",

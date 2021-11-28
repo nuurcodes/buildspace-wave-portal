@@ -1,6 +1,6 @@
-import React, { ForwardedRef, forwardRef } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 import { Alert, AlertColor, CircularProgress, IconButton } from '@mui/material'
-import { getExplorerTransactionLink, Notification } from '@usedapp/core'
+import { getExplorerTransactionLink } from '@usedapp/core'
 import { CustomContentProps, useSnackbar } from 'notistack'
 import CloseIcon from '@mui/icons-material/Close'
 import LinkIcon from '@mui/icons-material/Link'
